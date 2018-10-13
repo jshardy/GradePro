@@ -20,6 +20,7 @@ namespace GradePro
         const string professorFile = @"C:\Users\jshar\Desktop\Grading\Professors.txt";
         const string settingsFile = @"C:\Users\jshar\Desktop\Grading\GradingPro.ini";
         const string homeworkFile = @"C:\Users\jshar\Desktop\Grading\Homework.txt";
+        const string studentsFile = @"C:\Users\jshar\Desktop\Grading\Students.txt";
         const string magicspace = "_____ ";
         const string magicx = "__✓__ ";
         public frmMain()
@@ -51,6 +52,15 @@ namespace GradePro
                 sr.Close();
             }
 
+            if(File.Exists(studentsFile))
+            {
+                sr = new StreamReader(studentsFile);
+
+                while(!sr.EndOfStream)
+                    cmboStudentName.Items.Add(sr.ReadLine());
+
+                sr.Close();
+            }
 
             if(File.Exists(homeworkFile))
             {
@@ -145,13 +155,48 @@ namespace GradePro
 
                 doc.Save();
 
+                //Merge to one doc
+                if(chkSingleFile.Checked)
+                {
+                    doc.Close();
+                    object masterFile = txtPath.Text + "\\" + cmboClass.Text + " - " + cmboHomework.Text + ".doc";
+                    if(!File.Exists((string)masterFile))
+                    {
+                        File.Copy((string)strFileName, (string)masterFile);
+                    }
+                    else
+                    {
+                        word.Document d = wordApp.Documents.Open(ref masterFile, ref missing, ref readOnly, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref isVisible);
+                        word.Selection selection = wordApp.Selection;
+
+                        //should put this in function.
+                        //Go to end of page.
+                        Object toWhat = word.WdGoToItem.wdGoToLine;
+                        Object toWhich = word.WdGoToDirection.wdGoToLast;
+                        wordApp.Selection.GoTo(toWhat, toWhich, ref missing, ref missing);
+                        wordApp.Selection.EndKey(word.WdUnits.wdStory, ref missing);
+
+                        object pageBreak = word.WdBreakType.wdPageBreak;
+                        selection.InsertBreak(ref pageBreak);
+
+                        selection.InsertFile((string)strFileName);
+                        d.Save();
+
+                        if(!chkMSWord.Checked)
+                            d.Close();
+                    }
+                }
+
                 //leave it open for inspection if chosen
                 if(!chkMSWord.Checked)
                 {
-                    doc.Close();
+                    if(!chkSingleFile.Checked)
+                        doc.Close();
+
                     wordApp.Quit();
                 }
             }
+
             btnSave.Enabled = true;
             btnSave.Text = "Save";
             btnClear_Click(this, null);
@@ -194,9 +239,14 @@ namespace GradePro
             txtComments.Text = txtDaysLate.Text = cmboStudentName.Text = "";
             foreach(var chkBox in Utility.GetAllChildren(this).OfType<CheckBox>())
             {
-                if(chkBox.Checked && chkBox != chkMSWord)
+                if(chkBox.Checked && chkBox != chkMSWord && chkBox != chkSingleFile)
                     chkBox.Checked = false;
             }
+        }
+
+        private void frmMain_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

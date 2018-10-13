@@ -85,12 +85,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.btnClear = new System.Windows.Forms.Button();
             this.chkMSWord = new System.Windows.Forms.CheckBox();
             this.btnPath = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.txtPath = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
-            this.btnClear = new System.Windows.Forms.Button();
+            this.chkSingleFile = new System.Windows.Forms.CheckBox();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -740,6 +741,7 @@
             // 
             // groupBox8
             // 
+            this.groupBox8.Controls.Add(this.chkSingleFile);
             this.groupBox8.Controls.Add(this.btnClear);
             this.groupBox8.Controls.Add(this.chkMSWord);
             this.groupBox8.Controls.Add(this.btnPath);
@@ -755,10 +757,21 @@
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Do";
             // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(20, 90);
+            this.btnClear.Margin = new System.Windows.Forms.Padding(4);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(135, 42);
+            this.btnClear.TabIndex = 9;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
             // chkMSWord
             // 
             this.chkMSWord.AutoSize = true;
-            this.chkMSWord.Location = new System.Drawing.Point(252, 98);
+            this.chkMSWord.Location = new System.Drawing.Point(163, 97);
             this.chkMSWord.Margin = new System.Windows.Forms.Padding(4);
             this.chkMSWord.Name = "chkMSWord";
             this.chkMSWord.Size = new System.Drawing.Size(203, 29);
@@ -806,16 +819,16 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // btnClear
+            // chkSingleFile
             // 
-            this.btnClear.Location = new System.Drawing.Point(20, 90);
-            this.btnClear.Margin = new System.Windows.Forms.Padding(4);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(135, 42);
-            this.btnClear.TabIndex = 9;
-            this.btnClear.Text = "Clear";
-            this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            this.chkSingleFile.AutoSize = true;
+            this.chkSingleFile.Location = new System.Drawing.Point(365, 95);
+            this.chkSingleFile.Margin = new System.Windows.Forms.Padding(4);
+            this.chkSingleFile.Name = "chkSingleFile";
+            this.chkSingleFile.Size = new System.Drawing.Size(145, 29);
+            this.chkSingleFile.TabIndex = 10;
+            this.chkSingleFile.Text = "Single File";
+            this.chkSingleFile.UseVisualStyleBackColor = true;
             // 
             // frmMain
             // 
@@ -833,6 +846,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmMain";
             this.Text = "Grade Pro";
+            this.Load += new System.EventHandler(this.frmMain_Load);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -919,6 +933,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txtDaysLate;
         private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.CheckBox chkSingleFile;
     }
 }
 
